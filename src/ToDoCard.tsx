@@ -11,10 +11,11 @@ import axios from 'axios';
 interface CardProps {
   content: string,
   isComplete: boolean,
-  id: number
+  id: number,
+  handleDelete: (id: number) => {}
 }
 
-export default function OutlinedCard({content, isComplete, id}: CardProps) {
+export default function OutlinedCard({content, isComplete, id, handleDelete}: CardProps) {
 
   const [inputValue, setInputValue] = React.useState(content);
   const [isComp, setIsComp] = React.useState(false);
@@ -75,7 +76,7 @@ export default function OutlinedCard({content, isComplete, id}: CardProps) {
     <CardActions>
       <Button variant='outlined' size='small' onClick={handleUpdate}>Update</Button>
       <Button variant='outlined' size='small' onClick={handleComplete} style={{ backgroundColor: isComp ? 'green' : 'inherit'}}>Complete</Button>
-      <Button variant='outlined' size='small'>Delete</Button>
+      <Button variant='outlined' size='small' onClick={() => handleDelete(id)}>Delete</Button>
     </CardActions>
   </React.Fragment>
       </Card>

@@ -35,6 +35,22 @@ function App() {
     postToDo();
   }, [todoText])
 
+  const handleDelete = async (id) => {
+    try {
+      const reponse = await axios({
+        method: 'delete',
+        url: 'http://localhost:5039/api/ToDoItems',
+        headers: {},
+        data: {
+          "id": id
+        }
+      })
+      setTodoList(todoList.filter((todo) => todo.id !== id));
+    } catch (error) {
+      console.log('Error: ', error)
+    }
+  }
+
   return (
     <>
       <div className="input-form">
@@ -48,6 +64,7 @@ function App() {
           content={todo.content} 
           isComplete={todo.IsComplete}
           id={todo.id}
+          handleDelete={handleDelete}
           />
         ))}
       </div>
