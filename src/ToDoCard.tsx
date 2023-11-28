@@ -6,30 +6,60 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
+import axios from 'axios';
 
-const card = (
-  <React.Fragment>
+interface CardProps {
+  content: string,
+  isComplete: boolean,
+  id: number
+}
+
+export default function OutlinedCard({content, isComplete, id}: CardProps) {
+
+  const [inputValue, setInputValue] = React.useState(content);
+  const textFieldRef = React.useRef(null);
+
+  const handleUpdate = async () => {
+   try {
+     const reponse = await axios({
+      method: 'put',
+      url: 'http://localhost:5039/api/ToDoItems',
+      headers: {},
+      data: {
+        "id": id,
+        "content": inputValue,
+        "isComplete": isComplete
+      }})
+   } catch (error) {
+     console.log('Error:', error);
+   }
+  }
+
+  return (
+    <Box sx={{ minWidth: 275 }}>
+      <Card variant="outlined">
+      <React.Fragment>
     <CardContent>
       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
         ToDo
       </Typography>
       <TextField
+          ref={textFieldRef}
           id="standard-multiline-static"
           multiline
           rows={4}
           variant="standard"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
     </CardContent>
     <CardActions>
+      <Button variant='outlined' size='small' onClick={handleUpdate}>Update</Button>
       <Button variant='outlined' size='small'>Complete</Button>
+      <Button variant='outlined' size='small'>Delete</Button>
     </CardActions>
   </React.Fragment>
-);
-
-export default function OutlinedCard() {
-  return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">{card}</Card>
+      </Card>
     </Box>
   );
 }
