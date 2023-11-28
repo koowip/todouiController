@@ -1,5 +1,5 @@
 body {
-  background-color: #f0f0f0; /* Change this to your preferred background color */
+  background-color: #EEE2DE; /* Change this to your preferred background color */
   margin: 0;
   height: 100vh;
   display: flex;
@@ -13,13 +13,7 @@ body {
   justify-content: center;
   gap: 1em;
  }
- 
- .card {
-  flex: 0 1 calc(25% - 1em);
-  margin: 1em;
-  border-radius: 4px;
- }
- 
+
  .input-form {
   display: flex;
   justify-content: center;
