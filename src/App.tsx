@@ -8,6 +8,7 @@ function App() {
 
   const [todoText, setTodoText] = useState(null);
   const [todoList, setTodoList] = useState([]);
+  
 
   useEffect(() => {
     const postToDo = async () => {

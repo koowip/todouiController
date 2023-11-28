@@ -17,6 +17,7 @@ interface CardProps {
 export default function OutlinedCard({content, isComplete, id}: CardProps) {
 
   const [inputValue, setInputValue] = React.useState(content);
+  const [isComp, setIsComp] = React.useState(false);
   const textFieldRef = React.useRef(null);
 
   const handleUpdate = async () => {
@@ -34,10 +35,28 @@ export default function OutlinedCard({content, isComplete, id}: CardProps) {
      console.log('Error:', error);
    }
   }
+  
+  const handleComplete = async () => {
+    try {
+      const reponse = await axios({
+       method: 'put',
+       url: 'http://localhost:5039/api/ToDoItems',
+       headers: {},
+       data: {
+         "id": id,
+         "content": inputValue,
+         "isComplete": isComp
+       }})
+       setIsComp(true);
+    } catch (error) {
+      console.log('Error:', error);
+    }
+   }
+
 
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">
+      <Card variant="outlined" sx={{ bgcolor: isComp ? 'grey' : 'white' }}>
       <React.Fragment>
     <CardContent>
       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -55,7 +74,7 @@ export default function OutlinedCard({content, isComplete, id}: CardProps) {
     </CardContent>
     <CardActions>
       <Button variant='outlined' size='small' onClick={handleUpdate}>Update</Button>
-      <Button variant='outlined' size='small'>Complete</Button>
+      <Button variant='outlined' size='small' onClick={handleComplete} style={{ backgroundColor: isComp ? 'green' : 'inherit'}}>Complete</Button>
       <Button variant='outlined' size='small'>Delete</Button>
     </CardActions>
   </React.Fragment>
