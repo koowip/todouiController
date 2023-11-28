@@ -37,14 +37,8 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      const reponse = await axios({
-        method: 'delete',
-        url: 'http://localhost:5039/api/ToDoItems',
-        headers: {},
-        data: {
-          "id": id
-        }
-      })
+      console.log(id);
+      await axios.delete(`http://localhost:5039/api/ToDoItems/${id}`);
       setTodoList(todoList.filter((todo) => todo.id !== id));
     } catch (error) {
       console.log('Error: ', error)
